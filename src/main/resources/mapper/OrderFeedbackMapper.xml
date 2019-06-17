@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.OrderFeedbackMapper">
+  <resultMap id="BaseResultMap" type="com.web.model.OrderFeedback">
+    <id column="feedback_id" jdbcType="INTEGER" property="feedbackId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_sex" jdbcType="VARCHAR" property="userSex" />
+    <result column="handle_status" jdbcType="VARCHAR" property="handleStatus" />
+    <result column="user_contact" jdbcType="VARCHAR" property="userContact" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_buydate" jdbcType="VARCHAR" property="productBuydate" />
+    <result column="product_problem" jdbcType="VARCHAR" property="productProblem" />
+    <result column="feedback_createtime" jdbcType="TIMESTAMP" property="feedbackCreatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    feedback_id, user_name, user_sex, handle_status, user_contact, product_name, product_buydate, 
+    product_problem, feedback_createtime
+  </sql>
+  <select id="selectByExample" parameterType="com.web.model.OrderFeedbackExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_order_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_order_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_order_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.OrderFeedbackExample">
+    delete from sys_order_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.OrderFeedback">
+    insert into sys_order_feedback (feedback_id, user_name, user_sex, 
+      handle_status, user_contact, product_name, 
+      product_buydate, product_problem, feedback_createtime
+      )
+    values (#{feedbackId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, 
+      #{handleStatus,jdbcType=VARCHAR}, #{userContact,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productBuydate,jdbcType=VARCHAR}, #{productProblem,jdbcType=VARCHAR}, #{feedbackCreatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.OrderFeedback">
+    insert into sys_order_feedback
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="feedbackId != null">
+        feedback_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userSex != null">
+        user_sex,
+      </if>
+      <if test="handleStatus != null">
+        handle_status,
+      </if>
+      <if test="userContact != null">
+        user_contact,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productBuydate != null">
+        product_buydate,
+      </if>
+      <if test="productProblem != null">
+        product_problem,
+      </if>
+      <if test="feedbackCreatetime != null">
+        feedback_createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="feedbackId != null">
+        #{feedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null">
+        #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userContact != null">
+        #{userContact,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productBuydate != null">
+        #{productBuydate,jdbcType=VARCHAR},
+      </if>
+      <if test="productProblem != null">
+        #{productProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackCreatetime != null">
+        #{feedbackCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.OrderFeedbackExample" resultType="java.lang.Integer">
+    select count(*) from sys_order_feedback
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_order_feedback
+    <set>
+      <if test="record.feedbackId != null">
+        feedback_id = #{record.feedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSex != null">
+        user_sex = #{record.userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.handleStatus != null">
+        handle_status = #{record.handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userContact != null">
+        user_contact = #{record.userContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productBuydate != null">
+        product_buydate = #{record.productBuydate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productProblem != null">
+        product_problem = #{record.productProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feedbackCreatetime != null">
+        feedback_createtime = #{record.feedbackCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_order_feedback
+    set feedback_id = #{record.feedbackId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_sex = #{record.userSex,jdbcType=VARCHAR},
+      handle_status = #{record.handleStatus,jdbcType=VARCHAR},
+      user_contact = #{record.userContact,jdbcType=VARCHAR},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_buydate = #{record.productBuydate,jdbcType=VARCHAR},
+      product_problem = #{record.productProblem,jdbcType=VARCHAR},
+      feedback_createtime = #{record.feedbackCreatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.OrderFeedback">
+    update sys_order_feedback
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSex != null">
+        user_sex = #{userSex,jdbcType=VARCHAR},
+      </if>
+      <if test="handleStatus != null">
+        handle_status = #{handleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userContact != null">
+        user_contact = #{userContact,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productBuydate != null">
+        product_buydate = #{productBuydate,jdbcType=VARCHAR},
+      </if>
+      <if test="productProblem != null">
+        product_problem = #{productProblem,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackCreatetime != null">
+        feedback_createtime = #{feedbackCreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.OrderFeedback">
+    update sys_order_feedback
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_sex = #{userSex,jdbcType=VARCHAR},
+      handle_status = #{handleStatus,jdbcType=VARCHAR},
+      user_contact = #{userContact,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_buydate = #{productBuydate,jdbcType=VARCHAR},
+      product_problem = #{productProblem,jdbcType=VARCHAR},
+      feedback_createtime = #{feedbackCreatetime,jdbcType=TIMESTAMP}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页SQL语句 -->
+  <select id="selectFeedbackByPage" resultMap="BaseResultMap">
+        select *
+        from sys_order_feedback limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getFeedbackCount" resultType="long">
+        SELECT COUNT(*) FROM sys_order_feedback
+    </select>
+  <!--模糊查询-->
+  <select id="likeQuery" resultMap="BaseResultMap"
+          parameterType="com.web.model.OrderFeedback">
+    select
+    <include refid="Base_Column_List" />
+    from sys_order_feedback where user_name like '%${value}%'
+  </select>
+</mapper>

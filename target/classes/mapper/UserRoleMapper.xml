@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.UserRoleDao" >
+    <resultMap id="BaseResultMap" type="com.web.model.UserRole" >
+        <id column="user_role_id" property="userRoleId" jdbcType="LONGVARCHAR" />
+        <result column="user_id" property="userId" jdbcType="LONGVARCHAR" />
+        <result column="role_id" property="roleId" jdbcType="LONGVARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    user_role_id, user_id, role_id
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from sys_user_role
+        where user_role_id = #{userRoleId,jdbcType=LONGVARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_user_role
+    where user_role_id = #{userRoleId,jdbcType=LONGVARCHAR}
+  </delete>
+  <delete id="deleteByPrimaryKey1" parameterType="java.lang.Long" >
+    delete from sys_user_role
+    where user_id = #{userId,jdbcType=LONGVARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.web.model.UserRole" >
+    insert into sys_user_role (user_role_id, user_id, role_id
+      )
+    values (#{userRoleId,jdbcType=LONGVARCHAR}, #{userId,jdbcType=LONGVARCHAR}, #{roleId,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.web.model.UserRole" >
+        insert into sys_user_role
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userRoleId != null" >
+                user_role_id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="roleId != null" >
+                role_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userRoleId != null" >
+                #{userRoleId,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="userId != null" >
+                #{userId,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="roleId != null" >
+                #{roleId,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.web.model.UserRole" >
+        update sys_user_role
+        <set >
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where user_role_id = #{userRoleId,jdbcType=LONGVARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.web.model.UserRole" >
+    update sys_user_role
+    set user_id = #{userId,jdbcType=LONGVARCHAR},
+      role_id = #{roleId,jdbcType=LONGVARCHAR}
+    where user_role_id = #{userRoleId,jdbcType=LONGVARCHAR}
+  </update>
+    <delete id="deleteByUserRole"
+            parameterType="com.web.model.UserRole">
+		delete from sys_user_role
+		where user_id = #{userId,jdbcType=LONGVARCHAR}
+		and role_id = #{roleId,jdbcType=LONGVARCHAR}
+	</delete>
+
+</mapper>

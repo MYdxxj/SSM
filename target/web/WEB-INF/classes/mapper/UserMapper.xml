@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.web.model.User">
+        <id column="user_id" property="userId" jdbcType="LONGVARCHAR"/>
+        <result column="user_age" property="userAge" jdbcType="INTEGER"/>
+        <result column="user_sex" property="userSex" jdbcType="VARCHAR"/>
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="user_birthday" property="userBirthday" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    user_id, user_age, user_sex, user_phone, login_name, password, user_birthday,
+    create_time, user_name
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where user_id = #{userId,jdbcType=LONGVARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user
+    where user_id = #{userId,jdbcType=LONGVARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.web.model.User">
+    insert into sys_user ( user_age, user_sex,
+      user_phone, login_name, password,
+      user_birthday, create_time, user_name
+      )
+    values ( #{userAge,jdbcType=INTEGER}, #{userSex,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{userBirthday,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.web.model.User">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userAge != null">
+                user_age,
+            </if>
+            <if test="userSex != null">
+                user_sex,
+            </if>
+            <if test="userPhone != null">
+                user_phone,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="userBirthday != null">
+                user_birthday,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="userAge != null">
+                #{userAge,jdbcType=INTEGER},
+            </if>
+            <if test="userSex != null">
+                #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                #{userBirthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.web.model.User">
+        update sys_user
+        <set>
+            <if test="userAge != null">
+                user_age = #{userAge,jdbcType=INTEGER},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="userBirthday != null">
+                user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=LONGVARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.web.model.User">
+    update sys_user
+    set user_age = #{userAge,jdbcType=INTEGER},
+      user_sex = #{userSex,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      user_birthday = #{userBirthday,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      user_name = #{userName,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=LONGVARCHAR}
+  </update>
+    <select id="queryToLogin" resultMap="BaseResultMap"
+            parameterType="com.web.model.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where login_name = #{loginName,jdbcType=VARCHAR} and
+        password =
+        #{password,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllUser" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user order by create_time desc
+    </select>
+
+    <!-- 登录 -->
+    <select id="queryUserByAccountAndPassword" resultMap="BaseResultMap"
+            parameterType="com.web.model.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where login_name = #{loginName,jdbcType=VARCHAR} and
+
+        password =
+        #{password,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--查找某用户的详细信息通过Id -->
+    <select id="getUserByUserId" resultMap="BaseResultMap"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user where user_id = #{userId,jdbcType=LONGVARCHAR}
+    </select>
+
+    <select id="queryAllUser" resultMap="BaseResultMap"
+            parameterType="com.web.model.User">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+    </select>
+    <select id="selectUserByName" resultMap="BaseResultMap">
+        select *
+        from sys_user where login_name=#{userName,jdbcType=VARCHAR}
+    </select>
+    <!-- 分页SQL语句 -->
+    <select id="selectUserByPage" resultMap="BaseResultMap">
+        select *
+        from sys_user limit #{startPos},#{pageSize}
+    </select>
+    <!-- 取得记录的总数 -->
+    <select id="getUserCount" resultType="long">
+        SELECT COUNT(*) FROM sys_user
+    </select>
+    <!--模糊查询-->
+    <select id="likeQuery" resultMap="BaseResultMap"
+            parameterType="com.web.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from sys_user where user_name like '%${value}%'
+    </select>
+</mapper>

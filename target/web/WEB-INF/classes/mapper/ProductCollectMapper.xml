@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.dao.ProductCollectMapper">
+  <resultMap id="BaseResultMap" type="com.web.model.ProductCollect">
+    <id column="product_msg_id" jdbcType="INTEGER" property="productMsgId" />
+    <result column="product_price_list_id" jdbcType="INTEGER" property="productPriceListId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="market_time" jdbcType="TIMESTAMP" property="marketTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    product_msg_id, product_price_list_id, product_name, product_type, market_time
+  </sql>
+  <select id="selectByExample" parameterType="com.web.model.ProductCollectExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_collect
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_collect
+    where product_msg_id = #{productMsgId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from product_collect
+    where product_msg_id = #{productMsgId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.ProductCollectExample">
+    delete from product_collect
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.ProductCollect">
+    insert into product_collect (product_msg_id, product_price_list_id, 
+      product_name, product_type, market_time
+      )
+    values (#{productMsgId,jdbcType=INTEGER}, #{productPriceListId,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR}, #{productType,jdbcType=VARCHAR}, #{marketTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.ProductCollect">
+    insert into product_collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="productMsgId != null">
+        product_msg_id,
+      </if>
+      <if test="productPriceListId != null">
+        product_price_list_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="marketTime != null">
+        market_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="productMsgId != null">
+        #{productMsgId,jdbcType=INTEGER},
+      </if>
+      <if test="productPriceListId != null">
+        #{productPriceListId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="marketTime != null">
+        #{marketTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.ProductCollectExample" resultType="java.lang.Integer">
+    select count(*) from product_collect
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update product_collect
+    <set>
+      <if test="record.productMsgId != null">
+        product_msg_id = #{record.productMsgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productPriceListId != null">
+        product_price_list_id = #{record.productPriceListId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productName != null">
+        product_name = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productType != null">
+        product_type = #{record.productType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marketTime != null">
+        market_time = #{record.marketTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update product_collect
+    set product_msg_id = #{record.productMsgId,jdbcType=INTEGER},
+      product_price_list_id = #{record.productPriceListId,jdbcType=INTEGER},
+      product_name = #{record.productName,jdbcType=VARCHAR},
+      product_type = #{record.productType,jdbcType=VARCHAR},
+      market_time = #{record.marketTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.ProductCollect">
+    update product_collect
+    <set>
+      <if test="productPriceListId != null">
+        product_price_list_id = #{productPriceListId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="marketTime != null">
+        market_time = #{marketTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where product_msg_id = #{productMsgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.ProductCollect">
+    update product_collect
+    set product_price_list_id = #{productPriceListId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_type = #{productType,jdbcType=VARCHAR},
+      market_time = #{marketTime,jdbcType=TIMESTAMP}
+    where product_msg_id = #{productMsgId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页SQL语句 -->
+  <select id="selectProductCollectByPage" resultMap="BaseResultMap">
+        select *
+        from product_collect limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getProductCollectCount" resultType="long">
+        SELECT COUNT(*) FROM product_collect
+    </select>
+  <!--通过产品id删除-->
+  <delete id="deleteByProductId" parameterType="java.lang.Integer">
+    delete from product_collect
+    where product_price_list_id = #{productId,jdbcType=INTEGER}
+  </delete>
+</mapper>

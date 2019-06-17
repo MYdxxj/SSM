@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.KbmMapper" >
+  <resultMap id="BaseResultMap" type="com.web.model.Kbm" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="Technical_name" property="technicalName" jdbcType="VARCHAR" />
+    <result column="Parts" property="parts" jdbcType="VARCHAR" />
+    <result column="kbm_desc" property="kbmDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, Technical_name, Parts, kbm_desc
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.web.model.KbmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_kbm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_kbm
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_kbm
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.KbmExample" >
+    delete from sys_kbm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.Kbm" >
+    insert into sys_kbm (id, Technical_name, Parts, 
+      kbm_desc)
+    values (#{id,jdbcType=INTEGER}, #{technicalName,jdbcType=VARCHAR}, #{parts,jdbcType=VARCHAR}, 
+      #{kbmDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.Kbm" >
+    insert into sys_kbm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="technicalName != null" >
+        Technical_name,
+      </if>
+      <if test="parts != null" >
+        Parts,
+      </if>
+      <if test="kbmDesc != null" >
+        kbm_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="technicalName != null" >
+        #{technicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="parts != null" >
+        #{parts,jdbcType=VARCHAR},
+      </if>
+      <if test="kbmDesc != null" >
+        #{kbmDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.KbmExample" resultType="java.lang.Integer" >
+    select count(*) from sys_kbm
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_kbm
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.technicalName != null" >
+        Technical_name = #{record.technicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parts != null" >
+        Parts = #{record.parts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kbmDesc != null" >
+        kbm_desc = #{record.kbmDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_kbm
+    set id = #{record.id,jdbcType=INTEGER},
+      Technical_name = #{record.technicalName,jdbcType=VARCHAR},
+      Parts = #{record.parts,jdbcType=VARCHAR},
+      kbm_desc = #{record.kbmDesc,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.Kbm" >
+    update sys_kbm
+    <set >
+      <if test="technicalName != null" >
+        Technical_name = #{technicalName,jdbcType=VARCHAR},
+      </if>
+      <if test="parts != null" >
+        Parts = #{parts,jdbcType=VARCHAR},
+      </if>
+      <if test="kbmDesc != null" >
+        kbm_desc = #{kbmDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.Kbm" >
+    update sys_kbm
+    set Technical_name = #{technicalName,jdbcType=VARCHAR},
+      Parts = #{parts,jdbcType=VARCHAR},
+      kbm_desc = #{kbmDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

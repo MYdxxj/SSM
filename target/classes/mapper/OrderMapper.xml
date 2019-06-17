@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.web.model.Order" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_createtime" property="orderCreatetime" jdbcType="TIMESTAMP" />
+    <result column="order_type" property="orderType" jdbcType="VARCHAR" />
+    <result column="order_state" property="orderState" jdbcType="VARCHAR" />
+    <result column="order_desc" property="orderDesc" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="order_total" property="orderTotal" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_createtime, order_type, order_state, order_desc, user_id, order_total
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.web.model.OrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.OrderExample" >
+    delete from sys_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.Order" >
+    insert into sys_order (order_id, order_createtime, order_type, 
+      order_state, order_desc, user_id, 
+      order_total)
+    values (#{orderId,jdbcType=INTEGER}, #{orderCreatetime,jdbcType=TIMESTAMP}, #{orderType,jdbcType=VARCHAR}, 
+      #{orderState,jdbcType=VARCHAR}, #{orderDesc,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{orderTotal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.Order" >
+    insert into sys_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderCreatetime != null" >
+        order_createtime,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="orderDesc != null" >
+        order_desc,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderTotal != null" >
+        order_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCreatetime != null" >
+        #{orderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDesc != null" >
+        #{orderDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTotal != null" >
+        #{orderTotal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.OrderExample" resultType="java.lang.Integer" >
+    select count(*) from sys_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_order
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderCreatetime != null" >
+        order_createtime = #{record.orderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderType != null" >
+        order_type = #{record.orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderState != null" >
+        order_state = #{record.orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderDesc != null" >
+        order_desc = #{record.orderDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderTotal != null" >
+        order_total = #{record.orderTotal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_order
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      order_createtime = #{record.orderCreatetime,jdbcType=TIMESTAMP},
+      order_type = #{record.orderType,jdbcType=VARCHAR},
+      order_state = #{record.orderState,jdbcType=VARCHAR},
+      order_desc = #{record.orderDesc,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      order_total = #{record.orderTotal,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.Order" >
+    update sys_order
+    <set >
+      <if test="orderCreatetime != null" >
+        order_createtime = #{orderCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=VARCHAR},
+      </if>
+      <if test="orderDesc != null" >
+        order_desc = #{orderDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderTotal != null" >
+        order_total = #{orderTotal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.Order" >
+    update sys_order
+    set order_createtime = #{orderCreatetime,jdbcType=TIMESTAMP},
+      order_type = #{orderType,jdbcType=VARCHAR},
+      order_state = #{orderState,jdbcType=VARCHAR},
+      order_desc = #{orderDesc,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      order_total = #{orderTotal,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页SQL语句 -->
+  <select id="selectOrderByPage" resultMap="BaseResultMap">
+        select *
+        from sys_order limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getOrderCount" resultType="long">
+        SELECT COUNT(*) FROM sys_order
+    </select>
+  <!--select * from sys_order where sys_order.user_id=1  LIMIT 1,2 -->
+  <select id="selectOrderByUserId" resultMap="BaseResultMap">
+        select *
+        from sys_order where user_id=#{userId} limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getUserOrderCount" resultType="long">
+        SELECT COUNT(*) FROM sys_order where user_id=#{userId,jdbcType=VARCHAR}
+   </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_order
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+</mapper>

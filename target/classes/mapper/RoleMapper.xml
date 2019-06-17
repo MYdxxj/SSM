@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.RoleDao" >
+  <resultMap id="BaseResultMap" type="com.web.model.Role" >
+    <id column="role_id" property="roleId" jdbcType="LONGVARCHAR" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+    <result column="role_state" property="roleState" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    role_id, role_name, role_desc, role_state
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where role_id = #{roleId,jdbcType=LONGVARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role
+    where role_id = #{roleId,jdbcType=LONGVARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.web.model.Role" >
+    insert into sys_role (role_id, role_name, role_desc, 
+      role_state)
+    values (#{roleId,jdbcType=LONGVARCHAR}, #{roleName,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR},
+      #{roleState,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.Role" >
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="roleDesc != null" >
+        role_desc,
+      </if>
+      <if test="roleState != null" >
+        role_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleState != null" >
+        #{roleState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.Role" >
+    update sys_role
+    <set >
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleDesc != null" >
+        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="roleState != null" >
+        role_state = #{roleState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=LONGVARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.Role" >
+    update sys_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_desc = #{roleDesc,jdbcType=VARCHAR},
+      role_state = #{roleState,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=LONGVARCHAR}
+  </update>
+  	<select id="selectAllRole" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+	</select>
+  <select id="getRoleNameByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+      select sys_role.role_id,sys_role.role_name,sys_role.role_desc,sys_role.role_state
+      FROM sys_role join sys_user_role on sys_role.role_id=sys_user_role.role_id right JOIN sys_user ON sys_user.user_id=sys_user_role.user_id
+      where sys_user.user_name =#{userName,jdbcType=VARCHAR}
+  </select>
+  <!--查找某角色的详细信息通过userId -->
+  <select id="getUserRoleByUserId" resultMap="BaseResultMap"
+          parameterType="java.lang.Long">
+        select sys_role.role_id,sys_role.role_name,sys_role.role_desc,sys_role.role_state
+        from sys_role join sys_user_role on sys_role.role_id=sys_user_role.role_id
+        where sys_user_role.user_id=#{userId,jdbcType=LONGVARCHAR}
+    </select>
+<!--  <select id="getRoles" resultType="Role">
+    SELECT * FROM sys_role WHERE username=#{username};
+</select>-->
+  <!-- 分页SQL语句 -->
+  <select id="selectRoleByPage" resultMap="BaseResultMap">
+        select *
+        from sys_role limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getRoleCount" resultType="long">
+        SELECT COUNT(*) FROM sys_role
+    </select>
+  <!--模糊查询-->
+  <select id="likeQuery" resultMap="BaseResultMap"
+          parameterType="com.web.model.Role">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role where role_name like '%${value}%'
+  </select>
+</mapper>

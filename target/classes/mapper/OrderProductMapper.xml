@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.OrderProductMapper" >
+  <resultMap id="BaseResultMap" type="com.web.model.OrderProduct" >
+    <id column="order_product_id" property="orderProductId" jdbcType="INTEGER" />
+    <result column="product_amount" property="productAmount" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="product_ids" property="productIds" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_product_id, product_amount, order_id, product_ids
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.web.model.OrderProductExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_order_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_order_product
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_order_product
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.OrderProductExample" >
+    delete from sys_order_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.OrderProduct" >
+    insert into sys_order_product (order_product_id, product_amount, order_id, 
+      product_ids)
+    values (#{orderProductId,jdbcType=INTEGER}, #{productAmount,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, 
+      #{productIds,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.OrderProduct" >
+    insert into sys_order_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderProductId != null" >
+        order_product_id,
+      </if>
+      <if test="productAmount != null" >
+        product_amount,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productIds != null" >
+        product_ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderProductId != null" >
+        #{orderProductId,jdbcType=INTEGER},
+      </if>
+      <if test="productAmount != null" >
+        #{productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        #{productIds,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.OrderProductExample" resultType="java.lang.Integer" >
+    select count(*) from sys_order_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_order_product
+    <set >
+      <if test="record.orderProductId != null" >
+        order_product_id = #{record.orderProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productAmount != null" >
+        product_amount = #{record.productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productIds != null" >
+        product_ids = #{record.productIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_order_product
+    set order_product_id = #{record.orderProductId,jdbcType=INTEGER},
+      product_amount = #{record.productAmount,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      product_ids = #{record.productIds,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.OrderProduct" >
+    update sys_order_product
+    <set >
+      <if test="productAmount != null" >
+        product_amount = #{productAmount,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productIds != null" >
+        product_ids = #{productIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.OrderProduct" >
+    update sys_order_product
+    set product_amount = #{productAmount,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      product_ids = #{productIds,jdbcType=VARCHAR}
+    where order_product_id = #{orderProductId,jdbcType=INTEGER}
+  </update>
+</mapper>

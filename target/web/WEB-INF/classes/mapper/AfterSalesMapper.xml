@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.AfterSalesMapper" >
+  <resultMap id="BaseResultMap" type="com.web.model.AfterSales" >
+    <id column="after_sales_id" property="afterSalesId" jdbcType="INTEGER" />
+    <result column="order_information" property="orderInformation" jdbcType="VARCHAR" />
+    <result column="after_sales_dsc" property="afterSalesDsc" jdbcType="VARCHAR" />
+    <result column="after_sales_create_time" property="afterSalesCreateTime" jdbcType="TIMESTAMP" />
+    <result column="waiter_id" property="waiterId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    after_sales_id, order_information, after_sales_dsc, after_sales_create_time, waiter_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.web.model.AfterSalesExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from after_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from after_sales
+    where after_sales_id = #{afterSalesId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from after_sales
+    where after_sales_id = #{afterSalesId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.AfterSalesExample" >
+    delete from after_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.AfterSales" >
+    insert into after_sales (after_sales_id, order_information, after_sales_dsc, 
+      after_sales_create_time, waiter_id)
+    values (#{afterSalesId,jdbcType=INTEGER}, #{orderInformation,jdbcType=VARCHAR}, #{afterSalesDsc,jdbcType=VARCHAR}, 
+      #{afterSalesCreateTime,jdbcType=TIMESTAMP}, #{waiterId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.AfterSales" >
+    insert into after_sales
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="afterSalesId != null" >
+        after_sales_id,
+      </if>
+      <if test="orderInformation != null" >
+        order_information,
+      </if>
+      <if test="afterSalesDsc != null" >
+        after_sales_dsc,
+      </if>
+      <if test="afterSalesCreateTime != null" >
+        after_sales_create_time,
+      </if>
+      <if test="waiterId != null" >
+        waiter_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="afterSalesId != null" >
+        #{afterSalesId,jdbcType=INTEGER},
+      </if>
+      <if test="orderInformation != null" >
+        #{orderInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSalesDsc != null" >
+        #{afterSalesDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSalesCreateTime != null" >
+        #{afterSalesCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="waiterId != null" >
+        #{waiterId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.AfterSalesExample" resultType="java.lang.Integer" >
+    select count(*) from after_sales
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update after_sales
+    <set >
+      <if test="record.afterSalesId != null" >
+        after_sales_id = #{record.afterSalesId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderInformation != null" >
+        order_information = #{record.orderInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afterSalesDsc != null" >
+        after_sales_dsc = #{record.afterSalesDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.afterSalesCreateTime != null" >
+        after_sales_create_time = #{record.afterSalesCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.waiterId != null" >
+        waiter_id = #{record.waiterId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update after_sales
+    set after_sales_id = #{record.afterSalesId,jdbcType=INTEGER},
+      order_information = #{record.orderInformation,jdbcType=VARCHAR},
+      after_sales_dsc = #{record.afterSalesDsc,jdbcType=VARCHAR},
+      after_sales_create_time = #{record.afterSalesCreateTime,jdbcType=TIMESTAMP},
+      waiter_id = #{record.waiterId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.AfterSales" >
+    update after_sales
+    <set >
+      <if test="orderInformation != null" >
+        order_information = #{orderInformation,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSalesDsc != null" >
+        after_sales_dsc = #{afterSalesDsc,jdbcType=VARCHAR},
+      </if>
+      <if test="afterSalesCreateTime != null" >
+        after_sales_create_time = #{afterSalesCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="waiterId != null" >
+        waiter_id = #{waiterId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where after_sales_id = #{afterSalesId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.AfterSales" >
+    update after_sales
+    set order_information = #{orderInformation,jdbcType=VARCHAR},
+      after_sales_dsc = #{afterSalesDsc,jdbcType=VARCHAR},
+      after_sales_create_time = #{afterSalesCreateTime,jdbcType=TIMESTAMP},
+      waiter_id = #{waiterId,jdbcType=VARCHAR}
+    where after_sales_id = #{afterSalesId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页SQL语句 -->
+  <select id="selectAfterSalesByPage" resultMap="BaseResultMap">
+        select *
+        from after_sales limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getAfterSalesCount" resultType="long">
+        SELECT COUNT(*) FROM after_sales
+    </select>
+  <!--模糊查询-->
+  <select id="likeQuery" resultMap="BaseResultMap"
+          parameterType="com.web.model.AfterSales">
+    select
+    <include refid="Base_Column_List" />
+    from after_sales where order_information like '%${value}%'
+  </select>
+
+  <select id="selectAfterSaleByOrderId" resultMap="BaseResultMap">
+        select *
+        from after_sales where order_information=#{orderId} limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getAfterSaleCountByOrderId" resultType="long">
+        SELECT COUNT(*) FROM sys_order where order_information=#{orderId,jdbcType=VARCHAR}
+   </select>
+
+  <select id="selectAllByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from after_sales
+    where order_information = #{orderId,jdbcType=VARCHAR}
+  </select>
+</mapper>

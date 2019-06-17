@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.web.dao.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.web.model.Activity" >
+    <id column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="VARCHAR" />
+    <result column="activity_status" property="activityStatus" jdbcType="VARCHAR" />
+    <result column="activity_description" property="activityDescription" jdbcType="VARCHAR" />
+    <result column="activity_time" property="activityTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    activity_id, activity_name, activity_type, activity_status, activity_description, 
+    activity_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.web.model.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_activity
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_activity
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.web.model.ActivityExample" >
+    delete from sys_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.web.model.Activity" >
+    insert into sys_activity (activity_id, activity_name, activity_type, 
+      activity_status, activity_description, activity_time
+      )
+    values (#{activityId,jdbcType=INTEGER}, #{activityName,jdbcType=VARCHAR}, #{activityType,jdbcType=VARCHAR}, 
+      #{activityStatus,jdbcType=VARCHAR}, #{activityDescription,jdbcType=VARCHAR}, #{activityTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.web.model.Activity" >
+    insert into sys_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="activityStatus != null" >
+        activity_status,
+      </if>
+      <if test="activityDescription != null" >
+        activity_description,
+      </if>
+      <if test="activityTime != null" >
+        activity_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null" >
+        #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="activityDescription != null" >
+        #{activityDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTime != null" >
+        #{activityTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.web.model.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from sys_activity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_activity
+    <set >
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.activityName != null" >
+        activity_name = #{record.activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityType != null" >
+        activity_type = #{record.activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityStatus != null" >
+        activity_status = #{record.activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityDescription != null" >
+        activity_description = #{record.activityDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activityTime != null" >
+        activity_time = #{record.activityTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_activity
+    set activity_id = #{record.activityId,jdbcType=INTEGER},
+      activity_name = #{record.activityName,jdbcType=VARCHAR},
+      activity_type = #{record.activityType,jdbcType=VARCHAR},
+      activity_status = #{record.activityStatus,jdbcType=VARCHAR},
+      activity_description = #{record.activityDescription,jdbcType=VARCHAR},
+      activity_time = #{record.activityTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.web.model.Activity" >
+    update sys_activity
+    <set >
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null" >
+        activity_status = #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="activityDescription != null" >
+        activity_description = #{activityDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="activityTime != null" >
+        activity_time = #{activityTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.web.model.Activity" >
+    update sys_activity
+    set activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=VARCHAR},
+      activity_status = #{activityStatus,jdbcType=VARCHAR},
+      activity_description = #{activityDescription,jdbcType=VARCHAR},
+      activity_time = #{activityTime,jdbcType=VARCHAR}
+    where activity_id = #{activityId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页SQL语句 -->
+  <select id="selectActivityByPage" resultMap="BaseResultMap">
+        select *
+        from sys_activity limit #{startPos},#{pageSize}
+    </select>
+  <!-- 取得记录的总数 -->
+  <select id="getActivityCount" resultType="long">
+        SELECT COUNT(*) FROM sys_activity
+    </select>
+</mapper>
