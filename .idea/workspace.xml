@@ -77,7 +77,7 @@
         <counts>
           <entry key="css" value="80" />
           <entry key="dummy" value="1" />
-          <entry key="java" value="1561" />
+          <entry key="java" value="1563" />
           <entry key="jsp" value="3697" />
           <entry key="xml" value="101" />
         </counts>
@@ -85,7 +85,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="80" />
-          <entry key="JAVA" value="1561" />
+          <entry key="JAVA" value="1563" />
           <entry key="JSP" value="3697" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="XML" value="101" />
@@ -165,7 +165,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/web/shrio/MyRealm.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="258">
-              <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+              <caret line="65" column="45" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -325,7 +325,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="116" />
     <option name="y" value="197" />
     <option name="width" value="1620" />
@@ -691,7 +691,7 @@
       <workItem from="1558940922594" duration="968000" />
       <workItem from="1558944886258" duration="1358000" />
       <workItem from="1559534578385" duration="850000" />
-      <workItem from="1560771503492" duration="1795000" />
+      <workItem from="1560771503492" duration="2265000" />
     </task>
     <servers />
   </component>
@@ -713,7 +713,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="449966000" />
+    <option name="totallyTimeSpent" value="450436000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -1148,7 +1148,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/web/shrio/MyRealm.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="258">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
+          <caret line="65" column="45" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
         </state>
       </provider>
     </entry>
