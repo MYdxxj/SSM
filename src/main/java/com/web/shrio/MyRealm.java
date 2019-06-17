@@ -64,7 +64,6 @@ public class MyRealm extends AuthorizingRealm{
         info.setRoles(roleSet);
         /**根据用户ID查询权限（permission），放入到Authorization里.*/
         info.setStringPermissions(theUrls);
-        123456789
         return info;
 
     }
